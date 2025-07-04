@@ -688,7 +688,7 @@ function onFetchSurah() {
 
 if (verses.length) {
     document.getElementById("inputText").value = verses.map(v => v.text).join(" ");
-    analyzeText(); // ✅ هنا التحليل تلقائي
+    analyze(); // ✅ هنا التحليل تلقائي
 } else {
     alert("❌ لم يتم العثور على السورة");
 }
