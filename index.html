@@ -692,7 +692,24 @@ function onFetchSurah() {
     alert("❌ لم يتم العثور على السورة");
   }
 }
-</script>
 
+  function loadSurah() {
+    const surahInput = document.getElementById("surahInput").value.trim();
+    fetch("surahs_full.json")
+      .then(res => res.json())
+      .then(data => {
+        const filtered = data.filter(ayah =>
+          ayah.surah == surahInput || ayah.surah_name_ar.includes(surahInput)
+        );
+        const text = filtered.map(a => a.text).join(" ");
+        document.getElementById("textInput").value = text;
+        analyzeText(); // يشغل التحليل تلقائيًا
+      })
+      .catch(err => {
+        alert("فشل تحميل السورة. تأكد من أن الملف surahs_full.json موجود.");
+        console.error(err);
+      });
+  }
+  </script>
 </body>
 </html>
