@@ -6,40 +6,22 @@
   <title>التحليل الرقمي القرآني</title>
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#2e7d32"/>
-
-  <!-- مكتبة Tailwind للتصميم -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- خط Cairo -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- مكتبة PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-  <!-- مكتبة Cropper -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
-
   <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .dark-mode {
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-    .dark-mode textarea,
-    .dark-mode input,
-    .dark-mode button {
-      background-color: #1e1e1e !important;
-      color: #ffffff !important;
-      border-color: #444 !important;
+    body {font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s;}
+    .dark-mode {background-color: #121212; color: #e0e0e0;}
+    .dark-mode textarea, .dark-mode input, .dark-mode button {
+      background-color: #1e1e1e !important; color: #ffffff !important; border-color: #444 !important;
     }
   </style>
 </head>
 <body id="body" class="bg-[#fdfcf9] text-[#2e7d32] p-6">
-  <div id="introScreen" class="text-center py-16 max-w-xl mx-auto bg-white shadow-xl rounded-xl">
+
+<div id="introScreen" class="text-center py-16 max-w-xl mx-auto bg-white shadow-xl rounded-xl">
   <div class="p-6">
     <h2 class="text-3xl font-bold mb-2">بسم الله الوكيل</h2>
     <h3 class="text-2xl font-semibold mb-1">تحليل رقمي</h3>
@@ -57,64 +39,44 @@
     </button>
     <div id="errorMessage" class="text-red-600 mt-3 text-sm"></div>
   </div>
-  </div>
-  <div id="mainApp" style="display: none;" class="max-w-3xl mx-auto mt-8">
+</div>
+
+<div id="mainApp" style="display: none;" class="max-w-3xl mx-auto mt-8">
   <h2 class="text-2xl font-bold text-center mb-4">التحليل الرقمي القرآني 📖</h2>
 
   <div class="relative">
     <textarea id="inputText" oninput="triggerAnalyze()" placeholder="أدخل نصًا قرآنيًا أو نصًا عاديًا..."
       class="w-full h-40 p-4 border-2 border-green-200 rounded-xl text-lg mb-4 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"></textarea>
 
-    <!-- أزرار الكاميرا ورفع الصورة -->
     <div id="imageButtons" class="absolute bottom-2 right-2 flex gap-2">
-      <button id="cameraButton" onclick="openCamera()" class="bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded-xl text-sm shadow-md">
-        <span class="text-lg">📸</span>
-      </button>
-      <button onclick="document.getElementById('imageUpload').click()" class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded-xl text-sm shadow-md">
-        <span class="text-lg">📁</span>
-      </button>
+      <button id="cameraButton" onclick="openCamera()" class="bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded-xl text-sm shadow-md">📸</button>
+      <button onclick="document.getElementById('imageUpload').click()" class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded-xl text-sm shadow-md">📁</button>
       <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(event)" class="hidden" />
     </div>
   </div>
 
   <div class="flex flex-wrap justify-center gap-2 mb-4 mt-4">
-    <button onclick="toggleDetails()" class="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded-xl text-sm">
-      عرض/إخفاء التفاصيل
-    </button>
-
+    <button onclick="toggleDetails()" class="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded-xl text-sm">عرض/إخفاء التفاصيل</button>
     <label class="flex items-center gap-2 text-green-800 text-sm font-medium">
       <input type="checkbox" id="ignoreNumbers" checked class="scale-125 accent-green-600" onchange="triggerAnalyze()"> تجاهل الترقيم
     </label>
-
-    <button onclick="copyResult()" class="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded-xl text-sm">
-      نسخ النتيجة 📋
-    </button>
-
-    <button onclick="downloadPDF()" class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-xl text-sm">
-      حفظ PDF 📄
-    </button>
-
-    <button onclick="analyzeWords()" class="bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-xl text-sm">
-      تحليل كل كلمة 🔍
-    </button>
+    <button onclick="copyResult()" class="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded-xl text-sm">نسخ النتيجة 📋</button>
+    <button onclick="downloadPDF()" class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-xl text-sm">حفظ PDF 📄</button>
+    <button onclick="analyzeWords()" class="bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-xl text-sm">تحليل كل كلمة 🔍</button>
   </div>
 
   <div id="result" class="bg-green-50 border border-green-200 rounded-xl p-4 text-lg mb-4 text-gray-900"></div>
   <div id="details" class="text-sm text-gray-700 mb-4 hidden"></div>
   <div id="wordDetails" class="text-sm text-gray-800 mb-4"></div>
 
-  <!-- ✅ مكان إدخال اسم السورة في أسفل الصفحة -->
   <div class="mt-8 text-center">
     <h4 class="text-lg font-semibold mb-2">📖 إدخال اسم أو رقم السورة</h4>
-    <input type="text" id="surahInput" placeholder="مثال: البقرة أو 2"
-      class="w-64 p-2 border rounded-lg text-center mb-2" />
+    <input type="text" id="surahInput" placeholder="مثال: البقرة أو 2" class="w-64 p-2 border rounded-lg text-center mb-2" />
     <br>
-    <button onclick="loadSurah()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-xl mt-2">
-      📖 عرض السورة
-    </button>
+    <button onclick="loadSurah()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-xl mt-2">📖 عرض السورة</button>
   </div>
-  </div>
-  <script>
+</div>
+<script>
 // الوضع الليلي
 function toggleDarkMode() {
   const body = document.getElementById("body");
@@ -127,7 +89,7 @@ window.onload = function () {
   }
 };
 
-// الدخول بالرمز
+// الدخول برمز المرور
 function startApp() {
   const pass = document.getElementById("passcodeInput").value;
   if (pass === "2222") {
@@ -235,11 +197,11 @@ async function analyzeImageOCR(base64Image) {
     document.getElementById("inputText").value = text;
     analyze();
   } catch (e) {
-    alert("فشل تحليل الصورة. حاول مرة أخرى.");
+    alert("فشل تحليل الصورة. تأكد من المفتاح.");
   }
 }
 
-// تحميل السور من JSON
+// تحميل السور
 let surahsData = [];
 async function loadSurahs() {
   try {
@@ -251,7 +213,7 @@ async function loadSurahs() {
 }
 loadSurahs();
 
-// الدالة الموحدة لجلب السورة وتحليلها
+// جلب السورة
 function loadSurah() {
   const input = document.getElementById("surahInput").value.trim().toLowerCase();
   if (!surahsData.length) {
@@ -275,7 +237,7 @@ function loadSurah() {
   analyze();
 }
 
-// التحليل العام للنص
+// تحليل النص
 function analyze() {
   const text = document.getElementById("inputText").value;
   const ignoreNumbers = document.getElementById("ignoreNumbers").checked;
@@ -305,7 +267,7 @@ function analyze() {
   document.getElementById("details").innerHTML = "<strong>تفاصيل:</strong><br>"+details.join("<br>");
 }
 
-// التبسيط الرقمي
+// تبسيط
 function simplify(num) {
   const steps=[];
   while(num>9){
@@ -316,7 +278,7 @@ function simplify(num) {
   return steps;
 }
 
-// التحليل للكلمات مع التبسيط بجانب كل كلمة
+// تحليل الكلمات
 function analyzeWords() {
   const text = document.getElementById("inputText").value.trim();
   const ignoreNumbers = document.getElementById("ignoreNumbers").checked;
@@ -337,13 +299,13 @@ function analyzeWords() {
   document.getElementById("wordDetails").innerHTML = output;
 }
 
-// نسخ النتائج
+// نسخ
 function copyResult() {
   const text = document.getElementById("result").innerText+"\n"+document.getElementById("details").innerText;
   navigator.clipboard.writeText(text).then(()=>alert("✅ تم نسخ النتيجة."));
 }
 
-// تحميل PDF
+// PDF
 function downloadPDF() {
   const content=document.getElementById("mainApp");
   html2pdf().set({
@@ -355,7 +317,7 @@ function downloadPDF() {
   }).from(content).save();
 }
 
-// التفاصيل
+// تفاصيل
 function toggleDetails() {
   document.getElementById("details").classList.toggle("hidden");
 }
@@ -363,11 +325,15 @@ function triggerAnalyze() {
   analyze();
 }
 
-// القيم والرموز المهملة
-const values = { /* نفس القيم كما لديك */ };
-const ignoredChars = [/* نفس الرموز كما لديك */];
-  </script>
-  <div class="text-center text-sm text-gray-600 mt-16 mb-4 leading-relaxed">
+// القيم
+const values = {
+  "ا":1,"أ":1,"آ":1,"إ":1,"ى":1,"ب":2,"ت":3,"ث":4,"ج":5,"ح":6,"خ":7,"د":8,"ذ":9,"ر":10,"ز":11,"س":12,"ش":13,
+  "ص":14,"ض":15,"ط":16,"ظ":17,"ع":18,"غ":19,"ف":20,"ق":21,"ك":22,"ل":23,"م":24,"ن":25,"ه":26,"و":27,"ؤ":5,
+  "ي":28,"ئ":6,"ء":29
+};
+const ignoredChars = ["َ","ً","ُ","ٌ","ِ","ٍ","ْ","ّ","ٰ","ـ"];
+</script>
+<div class="text-center text-sm text-gray-600 mt-16 mb-4 leading-relaxed">
   <p class="text-green-700 font-semibold">﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾</p>
   <p>تم بحمد الله وتوفيقه</p>
   <p>بإشراف: <strong>عبدالرحمن عمرو</strong></p>
