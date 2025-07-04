@@ -686,11 +686,11 @@ function onFetchSurah() {
   const userInput = document.getElementById("surahInput").value;
   const verses = getSurah(userInput);
 
-  if (verses.length) {
+if (verses.length) {
     document.getElementById("inputText").value = verses.map(v => v.text).join(" ");
-  } else {
+    analyzeText(); // ✅ هنا التحليل تلقائي
+} else {
     alert("❌ لم يتم العثور على السورة");
-  }
 }
 
   function loadSurah() {
