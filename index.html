@@ -641,59 +641,6 @@ function installApp() {
     } catch (err) {
       alert("حدث خطأ أثناء تحميل السورة");
     }
-  }
-</script>
-
-
-<!-- 📖 إضافة إدخال اسم السورة -->
-<div style="text-align:center; margin-top: 20px;">
-  <input type="text" id="surahInput" placeholder="أدخل رقم السورة أو اسمها بالعربية" style="padding:8px; font-size:16px;" />
-  <button onclick="onFetchSurah()" style="padding:8px 12px; font-size:16px;">📖 عرض السورة</button>
-</div>
-
-<script>
-let surahsData = [];
-
-async function loadSurahs() {
-  try {
-    const res = await fetch("surahs_full.json");
-    surahsData = await res.json();
-  } catch (e) {
-    alert("حدث خطأ أثناء تحميل الملف");
-  }
-}
-
-loadSurahs();
-
-function getSurah(input) {
-  if (!surahsData.length) {
-    alert("البيانات غير جاهزة بعد");
-    return [];
-  }
-
-  input = input.trim().toLowerCase();
-  const surahIndex = parseInt(input);
-
-  return surahsData.filter(verse => {
-    if (!isNaN(surahIndex)) {
-      return verse.surah === surahIndex;
-    } else {
-      return verse.surah_name_ar && verse.surah_name_ar.trim().toLowerCase() === input;
-    }
-  });
-}
-
-function onFetchSurah() {
-  const userInput = document.getElementById("surahInput").value;
-  const verses = getSurah(userInput);
-
-  if (verses.length) {
-    document.getElementById("inputText").value = verses.map(v => v.text).join(" ");
-  } else {
-    alert("❌ لم يتم العثور على السورة");
-  }
-}
-
 
 </body>
 </html>
